@@ -3,117 +3,331 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nguyễn Thùy Linh (Cá) 🤍</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+    <title>Thế Giới Của Cá 🐟💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Toàn bộ CSS giao diện gộp tại đây */
+        :root {
+            --pink-bg: #FFE5EC;
+            --pink-card: rgba(255, 255, 255, 0.65);
+            --pink-accent: #FF8FAB;
+            --pink-dark: #FB6F92;
+            --text-main: #5C4B51;
+            --text-light: #8C7A80;
+            --shadow: 0 15px 35px rgba(251, 111, 146, 0.15);
+            --radius: 24px;
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            cursor: none !important; /* Ẩn chuột mặc định trên toàn trang */
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #FFE5EC 0%, #FFC2D1 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* --- Custom Cursor --- */
+        .cursor-dot, .cursor-outline {
+            position: fixed; top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 99999; pointer-events: none;
+        }
+        .cursor-dot { width: 8px; height: 8px; background-color: var(--pink-dark); }
+        .cursor-outline { width: 40px; height: 40px; border: 2px solid var(--pink-accent); transition: width 0.2s, height 0.2s; }
+
+        /* --- Falling Petals Effect --- */
+        #petals-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; overflow: hidden; }
+        .petal { position: absolute; background: #fff; border-radius: 15px 0 15px 0; opacity: 0.6; animation: fall linear infinite; box-shadow: 0 0 10px rgba(255,194,209,0.5); }
+        @keyframes fall {
+            0% { top: -10%; transform: translateX(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { top: 110%; transform: translateX(100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- Main Layout --- */
+        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+
+        /* Hero Section */
+        .hero { text-align: center; margin-bottom: 60px; animation: fadeInDown 1s ease; }
+        .hero h1 { font-family: 'Dancing Script', cursive; font-size: 4.5rem; color: var(--pink-dark); text-shadow: 2px 2px 5px rgba(255,255,255,0.8); margin-bottom: 10px; }
+        .hero p { font-size: 1.2rem; color: var(--text-light); font-weight: 600; }
+
+        /* Bento Grid (Thiết kế bo góc hiện đại) */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px; margin-bottom: 60px;
+        }
+
+        .glass-card {
+            background: var(--pink-card);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: var(--radius);
+            padding: 30px; box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative; overflow: hidden;
+        }
+        .glass-card:hover { transform: translateY(-8px); box-shadow: 0 20px 45px rgba(251, 111, 146, 0.25); }
+
+        /* Avatar Box */
+        .avatar-box { grid-column: span 1; grid-row: span 2; padding: 0; display: flex; flex-direction: column; }
+        .avatar-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.95; transition: 0.5s; }
+        .avatar-box:hover img { transform: scale(1.05); }
+
+        /* Info Box */
+        .info-box { grid-column: span 2; display: flex; flex-direction: column; justify-content: center; }
+        .info-box h2 { font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: var(--pink-dark); margin-bottom: 15px; border-bottom: 2px dashed var(--pink-accent); padding-bottom: 10px; display: inline-block;}
+        .info-list { list-style: none; font-size: 1.1rem; line-height: 2; }
+        .info-list i { color: var(--pink-accent); width: 30px; font-size: 1.2rem; }
+        .info-list strong { color: var(--pink-dark); }
+
+        /* Social Box */
+        .social-box { grid-column: span 2; display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap; gap: 15px; }
+        .btn-social {
+            padding: 12px 25px; border-radius: 50px; text-decoration: none; color: white; font-weight: bold; display: flex; align-items: center; gap: 8px; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .btn-social.fb { background: #1877F2; }
+        .btn-social.ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .btn-social.tt { background: #000000; }
+        .btn-social.lk { background: #FFB000; }
+        .btn-social:hover { transform: scale(1.1); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+
+        /* Gallery Title */
+        .gallery-title { text-align: center; font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: var(--pink-dark); margin-bottom: 30px; animation: fadeIn 1.5s; }
+
+        /* Modern Masonry Gallery */
+        .gallery {
+            columns: 3 250px; column-gap: 20px;
+        }
+        .gallery-item {
+            margin-bottom: 20px; break-inside: avoid; border-radius: 15px; overflow: hidden;
+            box-shadow: var(--shadow); cursor: none; position: relative; border: 3px solid white;
+        }
+        .gallery-item img {
+            width: 100%; display: block; transition: 0.5s ease;
+        }
+        .gallery-item:hover img { transform: scale(1.1); filter: brightness(1.1); }
+        .gallery-item::after {
+            content: '🌸 Zoom'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            color: white; font-weight: bold; font-size: 1.2rem; text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+            opacity: 0; transition: 0.3s; pointer-events: none;
+        }
+        .gallery-item:hover::after { opacity: 1; }
+
+        /* Lightbox (Xem ảnh to) */
+        .lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,229,236, 0.95); backdrop-filter: blur(8px);
+            z-index: 100000; display: none; justify-content: center; align-items: center; opacity: 0; transition: 0.3s;
+        }
+        .lightbox.active { display: flex; opacity: 1; }
+        .lightbox img { max-width: 90%; max-height: 90vh; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); border: 5px solid white; animation: zoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .close-btn { position: absolute; top: 30px; right: 40px; font-size: 2.5rem; color: var(--pink-dark); font-weight: bold; transition: 0.3s; }
+        .close-btn:hover { transform: rotate(90deg) scale(1.2); }
+
+        /* Music Player Float */
+        .music-player {
+            position: fixed; bottom: 30px; right: 30px; background: white; border-radius: 50px;
+            padding: 10px 20px; display: flex; align-items: center; gap: 15px; box-shadow: var(--shadow); z-index: 99; border: 2px solid var(--pink-accent); transition: 0.3s;
+        }
+        .music-player:hover { transform: translateY(-5px); }
+        .play-btn { background: var(--pink-dark); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; display: flex; justify-content: center; align-items: center; transition: 0.3s; }
+        .play-btn:hover { background: var(--pink-accent); }
+        .music-info p { font-size: 0.9rem; font-weight: bold; color: var(--text-main); margin: 0;}
+        .music-info span { font-size: 0.75rem; color: var(--text-light); }
+
+        /* Animations */
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes zoomIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        /* Responsive */
+        @media (max-width: 900px) { .bento-grid { grid-template-columns: 1fr; } .avatar-box, .info-box, .social-box { grid-column: span 1; } .gallery { columns: 2 150px; } * { cursor: auto !important; } .cursor-dot, .cursor-outline { display: none; } }
+        @media (max-width: 500px) { .gallery { columns: 1 100%; } .hero h1 { font-size: 3rem; } .music-player { bottom: 15px; right: 15px; padding: 5px 15px; } }
+    </style>
 </head>
 <body>
 
-    <div id="preloader">
-        <div class="loader-circle"></div>
-        <p>Đang tải thế giới của Cá...</p>
-    </div>
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
 
-    <div class="music-widget" id="music-toggle">
-        <div class="music-icon"><i class="fas fa-music"></i></div>
+    <div id="petals-container"></div>
+
+    <div class="music-player">
+        <button class="play-btn" id="play-music"><i class="fas fa-play"></i></button>
         <div class="music-info">
-            <span class="song-name">Nhạc dạo...</span>
-            <div class="equalizer">
-                <span></span><span></span><span></span>
-            </div>
+            <p>Nhạc Cho Cá 🎵</p>
+            <span id="music-status">Nhấn để phát nhạc</span>
         </div>
-        <audio id="bg-music" loop>
-            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <audio id="bg-audio" loop>
+            <source src="https://www.bensound.com/bensound-music/bensound-tenderness.mp3" type="audio/mpeg">
         </audio>
     </div>
 
-    <main class="container">
-        <section class="hero" id="parallax-area">
-            <h1 class="layer" data-speed="2">Nguyễn Thùy Linh</h1>
-            <h2 class="layer" data-speed="-1">"Cá nhỏ"</h2>
-            <div class="scroll-indicator">
-                <span>Cuộn xuống</span>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-        </section>
+    <div class="container">
+        <div class="hero">
+            <h1>Nguyễn Thùy Linh</h1>
+            <p>Một chút dịu dàng, một chút cá tính 🌸</p>
+        </div>
 
-        <section class="bento-section fade-up">
-            <div class="bento-grid">
-                <div class="bento-card avatar-card" id="secret-trigger" title="Nhấn vào ảnh 5 lần xem có gì nhé!">
-                    <img src="https://i.ibb.co/C3kvzs25/23c34ffe-be6a-48cd-b67d-83b59b11a519.jpg" alt="Thùy Linh">
-                    <div class="card-overlay">
-                        <h3>Hi, it's me!</h3>
-                    </div>
-                </div>
-
-                <div class="bento-card info-card">
-                    <h3>Thông tin</h3>
-                    <ul>
-                        <li><i class="fas fa-id-badge"></i> <strong>Biệt danh:</strong> Cá</li>
-                        <li><i class="fas fa-cake-candles"></i> <strong>Ngày sinh:</strong> 05/11/2026</li>
-                        <li><i class="fas fa-star"></i> <strong>Cung:</strong> Thần Nông</li>
-                    </ul>
-                </div>
-
-                <div class="bento-card socials-card">
-                    <h3>Kết nối</h3>
-                    <div class="social-pills">
-                        <a href="https://www.instagram.com/t_uy.hnil" target="_blank" class="pill ig"><i class="fab fa-instagram"></i> t_uy.hnil</a>
-                        <a href="https://www.facebook.com/swt.juwi" target="_blank" class="pill fb"><i class="fab fa-facebook-f"></i> swt.juwi</a>
-                        <a href="https://www.tiktok.com/@n.tli_h" target="_blank" class="pill tt"><i class="fab fa-tiktok"></i> n.tli_h</a>
-                        <a href="https://locket.cam/emlinhday" target="_blank" class="pill lk"><i class="fas fa-camera"></i> emlinhday</a>
-                    </div>
-                </div>
-
-                <div class="bento-card quote-card">
-                    <i class="fas fa-quote-left"></i>
-                    <p>"Một chút dịu dàng, một chút cá tính."</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="gallery-section fade-up">
-            <div class="section-title">
-                <h2>Album của Cá</h2>
-                <p>Những khoảnh khắc được lưu giữ</p>
-            </div>
+        <div class="bento-grid">
             
-            <div class="modern-gallery">
-                <div class="gal-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/XxN3jbgv/c0883bf8-c1f4-4cda-bb60-37ead1cfe0af.jpg" alt="Linh 1"></div>
-                <div class="gal-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/FqNxpsk5/432fca4d-4e4f-4e8a-93f3-ce8dc7e7db19.jpg" alt="Linh 2"></div>
-                <div class="gal-item gal-tall" onclick="openLightbox(this)"><img src="https://i.ibb.co/XxLM8zJq/9c9738d3-7d92-4a20-82e0-15060f6c866e.jpg" alt="Linh 3"></div>
-                <div class="gal-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/jZ9BVrs4/084da3fe-fdb8-40a1-9e1f-54479ea72bf5.jpg" alt="Linh 4"></div>
-                <div class="gal-item gal-wide" onclick="openLightbox(this)"><img src="https://i.ibb.co/tTf83M6B/a0dae0cb-6e8c-4893-86c3-8c7ec39534ec.jpg" alt="Linh 5"></div>
-                <div class="gal-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/Sz0L2C0/52ceb30d-12b7-437d-8119-e9a846dfcd70.jpg" alt="Linh 6"></div>
-                <div class="gal-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/vx8VXGzy/1ae2a1c6-6a6c-446c-a919-9ed28bd469b3.jpg" alt="Linh 7"></div>
-                <div class="gal-item gal-tall" onclick="openLightbox(this)"><img src="https://i.ibb.co/HTCzNbKh/e3c9889a-9a5d-4b25-b699-20068d1ad637.jpg" alt="Linh 8"></div>
-                <div class="gal-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/FLLs2L4W/659084bc-e47c-4c69-a660-ae9332085b52.jpg" alt="Linh 9"></div>
-                <div class="gal-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/GvwCBzxc/4909af80-2ad2-427e-a159-70f1d2f20890.jpg" alt="Linh 10"></div>
-                <div class="gal-item gal-wide" onclick="openLightbox(this)"><img src="https://i.ibb.co/Zp3mPSL0/a5b6bc44-3001-4ba2-a803-a4c9d7d4b3d3.jpg" alt="Linh 11"></div>
-                <div class="gal-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/ccS1VzkJ/580ca18e-cc99-4b21-87a4-15df2529a637.jpg" alt="Linh 12"></div>
-                <div class="gal-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/XxN3jbgv/c0883bf8-c1f4-4cda-bb60-37ead1cfe0af.jpg" alt="Linh 13"></div>
+            <div class="glass-card avatar-box">
+                <img src="https://i.ibb.co/XxN3jbgv/c0883bf8-c1f4-4cda-bb60-37ead1cfe0af.jpg" alt="Avatar của Cá">
             </div>
-        </section>
 
-        <footer>
-            <p>Designed with <i class="fas fa-heart" style="color: #ff8da1;"></i> exclusively for Thùy Linh</p>
-        </footer>
-    </main>
+            <div class="glass-card info-box">
+                <h2>Thông Tin Về Cá</h2>
+                <ul class="info-list">
+                    <li><i class="fas fa-fish"></i> <strong>Biệt danh:</strong> Cá nhỏ đáng yêu</li>
+                    <li><i class="fas fa-birthday-cake"></i> <strong>Ngày sinh:</strong> 05/11/2026</li>
+                    <li><i class="fas fa-heart"></i> <strong>Sở thích:</strong> Lưu giữ những khoảnh khắc đẹp</li>
+                    <li><i class="fas fa-star"></i> <strong>Cung hoàng đạo:</strong> Thần Nông</li>
+                </ul>
+            </div>
 
-    <div id="lightbox" class="lightbox-wrapper">
-        <div class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></div>
-        <img id="lightbox-img" src="" alt="Zoomed">
-    </div>
+            <div class="glass-card social-box">
+                <a href="https://www.facebook.com/swt.juwi" target="_blank" class="btn-social fb"><i class="fab fa-facebook-f"></i> Facebook</a>
+                <a href="https://www.instagram.com/t_uy.hnil" target="_blank" class="btn-social ig"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="https://www.tiktok.com/@n.tli_h" target="_blank" class="btn-social tt"><i class="fab fa-tiktok"></i> TikTok</a>
+                <a href="https://locket.cam/emlinhday" target="_blank" class="btn-social lk"><i class="fas fa-camera"></i> Locket</a>
+            </div>
+        </div>
 
-    <div id="secret-modal" class="modal-overlay">
-        <div class="modal-box">
-            <h2>Bí Mật Của Cá 🐟</h2>
-            <p>Cậu đã tìm ra thông điệp ẩn! Chúc cậu luôn xinh đẹp, vui vẻ và giữ mãi nụ cười rạng rỡ như những bức ảnh kia nhé. Tặng cậu ngàn đóa hoa! 🌸</p>
-            <button onclick="closeSecret()" class="close-btn-modern">Đóng lại</button>
+        <h2 class="gallery-title">Album Của Cá 📸</h2>
+
+        <div class="gallery">
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/XxN3jbgv/c0883bf8-c1f4-4cda-bb60-37ead1cfe0af.jpg" alt="Ảnh 1"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/FqNxpsk5/432fca4d-4e4f-4e8a-93f3-ce8dc7e7db19.jpg" alt="Ảnh 2"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/C3kvzs25/23c34ffe-be6a-48cd-b67d-83b59b11a519.jpg" alt="Ảnh 3"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/XxLM8zJq/9c9738d3-7d92-4a20-82e0-15060f6c866e.jpg" alt="Ảnh 4"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/jZ9BVrs4/084da3fe-fdb8-40a1-9e1f-54479ea72bf5.jpg" alt="Ảnh 5"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/tTf83M6B/a0dae0cb-6e8c-4893-86c3-8c7ec39534ec.jpg" alt="Ảnh 6"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/Sz0L2C0/52ceb30d-12b7-437d-8119-e9a846dfcd70.jpg" alt="Ảnh 7"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/vx8VXGzy/1ae2a1c6-6a6c-446c-a919-9ed28bd469b3.jpg" alt="Ảnh 8"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/HTCzNbKh/e3c9889a-9a5d-4b25-b699-20068d1ad637.jpg" alt="Ảnh 9"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/FLLs2L4W/659084bc-e47c-4c69-a660-ae9332085b52.jpg" alt="Ảnh 10"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/GvwCBzxc/4909af80-2ad2-427e-a159-70f1d2f20890.jpg" alt="Ảnh 11"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/Zp3mPSL0/a5b6bc44-3001-4ba2-a803-a4c9d7d4b3d3.jpg" alt="Ảnh 12"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/ccS1VzkJ/580ca18e-cc99-4b21-87a4-15df2529a637.jpg" alt="Ảnh 13"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/XxN3jbgv/c0883bf8-c1f4-4cda-bb60-37ead1cfe0af.jpg" alt="Ảnh 14"></div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <div class="lightbox" id="lightbox">
+        <span class="close-btn" onclick="closeLightbox()">&times;</span>
+        <img id="lightbox-img" src="" alt="Zoomed Image">
+    </div>
+
+    <script>
+        // --- Toàn bộ JS Tương Tác ---
+
+        // 1. Hiệu ứng con trỏ chuột chạy theo
+        const cursorDot = document.getElementById("cursor-dot");
+        const cursorOutline = document.getElementById("cursor-outline");
+        
+        // Kiểm tra xem có phải màn hình máy tính không (điện thoại không cần chuột)
+        if(window.innerWidth > 900) {
+            window.addEventListener("mousemove", function (e) {
+                const posX = e.clientX;
+                const posY = e.clientY;
+                
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
+                
+                // Outline chạy theo trễ một chút tạo hiệu ứng mượt
+                cursorOutline.animate({
+                    left: `${posX}px`,
+                    top: `${posY}px`
+                }, { duration: 500, fill: "forwards" });
+            });
+
+            // Hiệu ứng phình to chuột khi hover vào link hoặc ảnh
+            const hoverElements = document.querySelectorAll('a, button, .gallery-item, .glass-card');
+            hoverElements.forEach(el => {
+                el.addEventListener('mouseenter', () => { cursorOutline.style.width = '60px'; cursorOutline.style.height = '60px'; cursorOutline.style.borderColor = '#FB6F92'; cursorOutline.style.backgroundColor = 'rgba(251, 111, 146, 0.1)'; });
+                el.addEventListener('mouseleave', () => { cursorOutline.style.width = '40px'; cursorOutline.style.height = '40px'; cursorOutline.style.borderColor = '#FF8FAB'; cursorOutline.style.backgroundColor = 'transparent'; });
+            });
+        }
+
+        // 2. JS tạo Hoa anh đào rơi
+        const petalsContainer = document.getElementById('petals-container');
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            
+            // Random kích thước, vị trí và thời gian rơi
+            const size = Math.random() * 10 + 5;
+            petal.style.width = `${size}px`;
+            petal.style.height = `${size}px`;
+            petal.style.left = `${Math.random() * 100}vw`;
+            petal.style.animationDuration = `${Math.random() * 3 + 4}s`; // 4-7s
+            
+            // Đổ bóng màu hồng ngẫu nhiên
+            const colors = ['#FFB6C1', '#FFC0CB', '#FFF0F5', '#FF69B4'];
+            petal.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            petalsContainer.appendChild(petal);
+            
+            // Xóa cánh hoa sau khi rơi xong để không nặng máy
+            setTimeout(() => { petal.remove(); }, 7000);
+        }
+        setInterval(createPetal, 300); // Mỗi 0.3s tạo 1 cánh hoa
+
+        // 3. Trình phát nhạc
+        const audio = document.getElementById('bg-audio');
+        const playBtn = document.getElementById('play-music');
+        const playIcon = playBtn.querySelector('i');
+        const musicStatus = document.getElementById('music-status');
+        let isPlaying = false;
+
+        audio.volume = 0.5; // Đặt âm lượng 50%
+
+        playBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                audio.pause();
+                playIcon.classList.remove('fa-pause');
+                playIcon.classList.add('fa-play');
+                musicStatus.textContent = "Đã tạm dừng";
+            } else {
+                audio.play();
+                playIcon.classList.remove('fa-play');
+                playIcon.classList.add('fa-pause');
+                musicStatus.textContent = "Đang phát nhạc ~";
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // 4. Mở Ảnh To (Lightbox)
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        function openLightbox(element) {
+            const imgSrc = element.querySelector('img').src;
+            lightboxImg.src = imgSrc;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Khóa cuộn trang
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Mở lại cuộn trang
+        }
+
+        // Click ra ngoài ảnh cũng đóng được
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) { closeLightbox(); }
+        });
+    </script>
 </body>
 </html>
