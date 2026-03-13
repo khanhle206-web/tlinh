@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thế giới của Cá 🐟💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor2"></div>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <header id="home">
+        <div class="glass-container hero-content">
+            <h1 class="title">Nguyễn Thùy Linh</h1>
+            <p class="subtitle typing-text"></p>
+            <a href="#about" class="btn-scroll">Khám phá nhé <i class="fas fa-arrow-down"></i></a>
+        </div>
+    </header>
+
+    <section id="about" class="reveal">
+        <div class="glass-container section-content">
+            <h2>Về "Cá" 🐟</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <i class="fas fa-tag"></i>
+                    <h3>Biệt danh</h3>
+                    <p>Cá nhỏ đáng yêu</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-birthday-cake"></i>
+                    <h3>Ngày sinh</h3>
+                    <p>05/11/2026</p>
+                </div>
+                <div class="info-card special-feature">
+                    <i class="fas fa-heart" id="heart-btn"></i>
+                    <h3>Bấm vào tim xem!</h3>
+                    <p>Một điều bất ngờ dành cho cậu</p>
+                </div>
+            </div>
+            
+            <div class="social-links">
+                <a href="https://www.instagram.com/t_uy.hnil" target="_blank" class="social-btn ig"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="https://www.facebook.com/swt.juwi" target="_blank" class="social-btn fb"><i class="fab fa-facebook-f"></i> Facebook</a>
+                <a href="https://www.tiktok.com/@n.tli_h" target="_blank" class="social-btn tt"><i class="fab fa-tiktok"></i> TikTok</a>
+                <a href="https://locket.cam/emlinhday" target="_blank" class="social-btn lk"><i class="fas fa-camera"></i> Locket</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="reveal">
+        <div class="glass-container section-content">
+            <h2>Album của Cá 📸</h2>
+            <p class="gallery-desc">Những khoảnh khắc xinh đẹp nhất của cậu</p>
+            <div class="masonry-gallery">
+                <div class="gallery-item"><img src="https://i.ibb.co/XxN3jbgv/c0883bf8-c1f4-4cda-bb60-37ead1cfe0af.jpg" alt="Img 1"></div>
+                <div class="gallery-item"><img src="https://i.ibb.co/FqNxpsk5/432fca4d-4e4f-4e8a-93f3-ce8dc7e7db19.jpg" alt="Img 2"></div>
+                <div class="gallery-item"><img src="https://i.ibb.co/C3kvzs25/23c34ffe-be6a-48cd-b67d-83b59b11a519.jpg" alt="Img 3"></div>
+                <div class="gallery-item"><img src="https://i.ibb.co/XxLM8zJq/9c9738d3-7d92-4a20-82e0-15060f6c866e.jpg" alt="Img 4"></div>
+                <div class="gallery-item"><img src="https://i.ibb.co/jZ9BVrs4/084da3fe-fdb8-40a1-9e1f-54479ea72bf5.jpg" alt="Img 5"></div>
+                <div class="gallery-item"><img src="https://i.ibb.co/tTf83M6B/a0dae0cb-6e8c-4893-86c3-8c7ec39534ec.jpg" alt="Img 6"></div>
+                <div class="gallery-item"><img src="https://i.ibb.co/Sz0L2C0/52ceb30d-12b7-437d-8119-e9a846dfcd70.jpg" alt="Img 7"></div>
+                <div class="gallery-item"><img src="https://i.ibb.co/vx8VXGzy/1ae2a1c6-6a6c-446c-a919-9ed28bd469b3.jpg" alt="Img 8"></div>
+                <div class="gallery-item"><img src="https://i.ibb.co/HTCzNbKh/e3c9889a-9a5d-4b25-b699-20068d1ad637.jpg" alt="Img 9"></div>
+                <div class="gallery-item"><img src="https://i.ibb.co/FLLs2L4W/659084bc-e47c-4c69-a660-ae9332085b52.jpg" alt="Img 10"></div>
+                <div class="gallery-item"><img src="https://i.ibb.co/GvwCBzxc/4909af80-2ad2-427e-a159-70f1d2f20890.jpg" alt="Img 11"></div>
+                <div class="gallery-item"><img src="https://i.ibb.co/Zp3mPSL0/a5b6bc44-3001-4ba2-a803-a4c9d7d4b3d3.jpg" alt="Img 12"></div>
+                <div class="gallery-item"><img src="https://i.ibb.co/ccS1VzkJ/580ca18e-cc99-4b21-87a4-15df2529a637.jpg" alt="Img 13"></div>
+                <div class="gallery-item"><img src="https://i.ibb.co/XxN3jbgv/c0883bf8-c1f4-4cda-bb60-37ead1cfe0af.jpg" alt="Img 14"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Làm với tất cả sự chân thành dành tặng Linh ❤️</p>
+    </footer>
+
+    <div id="lightbox" class="lightbox">
+        <span class="close-btn">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
