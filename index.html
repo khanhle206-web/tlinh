@@ -3,331 +3,366 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thế Giới Của Cá 🐟💖</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Thế Giới Của Cá 🐟✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* Toàn bộ CSS giao diện gộp tại đây */
         :root {
-            --pink-bg: #FFE5EC;
-            --pink-card: rgba(255, 255, 255, 0.65);
-            --pink-accent: #FF8FAB;
-            --pink-dark: #FB6F92;
-            --text-main: #5C4B51;
-            --text-light: #8C7A80;
-            --shadow: 0 15px 35px rgba(251, 111, 146, 0.15);
-            --radius: 24px;
+            --bg-color: #fff0f3;
+            --primary: #ff4d6d;
+            --primary-light: #ff8fa3;
+            --secondary: #ffb3c6;
+            --dark-text: #590d22;
+            --card-bg: #ffffff;
+            --border-color: #590d22;
+            --shadow-3d: 6px 6px 0px var(--border-color);
+            --shadow-hover: 2px 2px 0px var(--border-color);
         }
 
-        * {
-            margin: 0; padding: 0; box-sizing: border-box;
-            cursor: none !important; /* Ẩn chuột mặc định trên toàn trang */
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #FFE5EC 0%, #FFC2D1 100%);
-            color: var(--text-main);
-            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(#ffb3c6 2px, transparent 2px);
+            background-size: 30px 30px;
+            color: var(--dark-text);
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
 
-        /* --- Custom Cursor --- */
-        .cursor-dot, .cursor-outline {
-            position: fixed; top: 0; left: 0;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            z-index: 99999; pointer-events: none;
+        h1, h2, h3 { font-family: 'Mali', cursive; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 50px 20px; }
+
+        /* --- Nút bấm 3D cầu kỳ --- */
+        .btn-3d {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 12px 24px; font-family: 'Mali', cursive; font-size: 1.1rem;
+            font-weight: bold; color: var(--dark-text); background: var(--secondary);
+            border: 3px solid var(--border-color); border-radius: 15px;
+            box-shadow: var(--shadow-3d); cursor: pointer; text-decoration: none;
+            transition: all 0.15s ease;
         }
-        .cursor-dot { width: 8px; height: 8px; background-color: var(--pink-dark); }
-        .cursor-outline { width: 40px; height: 40px; border: 2px solid var(--pink-accent); transition: width 0.2s, height 0.2s; }
+        .btn-3d:hover { background: var(--primary-light); color: white; transform: translateY(-2px); }
+        .btn-3d:active { box-shadow: 0px 0px 0px var(--border-color); transform: translate(6px, 6px); }
 
-        /* --- Falling Petals Effect --- */
-        #petals-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; overflow: hidden; }
-        .petal { position: absolute; background: #fff; border-radius: 15px 0 15px 0; opacity: 0.6; animation: fall linear infinite; box-shadow: 0 0 10px rgba(255,194,209,0.5); }
-        @keyframes fall {
-            0% { top: -10%; transform: translateX(0) rotate(0deg); opacity: 0; }
-            20% { opacity: 0.8; }
-            100% { top: 110%; transform: translateX(100px) rotate(360deg); opacity: 0; }
-        }
-
-        /* --- Main Layout --- */
-        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
-
-        /* Hero Section */
-        .hero { text-align: center; margin-bottom: 60px; animation: fadeInDown 1s ease; }
-        .hero h1 { font-family: 'Dancing Script', cursive; font-size: 4.5rem; color: var(--pink-dark); text-shadow: 2px 2px 5px rgba(255,255,255,0.8); margin-bottom: 10px; }
-        .hero p { font-size: 1.2rem; color: var(--text-light); font-weight: 600; }
-
-        /* Bento Grid (Thiết kế bo góc hiện đại) */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px; margin-bottom: 60px;
+        /* --- Card 3D --- */
+        .card {
+            background: var(--card-bg); border: 4px solid var(--border-color);
+            border-radius: 24px; padding: 30px; box-shadow: var(--shadow-3d);
+            margin-bottom: 40px; position: relative; overflow: hidden;
         }
 
-        .glass-card {
-            background: var(--pink-card);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            border-radius: var(--radius);
-            padding: 30px; box-shadow: var(--shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative; overflow: hidden;
-        }
-        .glass-card:hover { transform: translateY(-8px); box-shadow: 0 20px 45px rgba(251, 111, 146, 0.25); }
+        /* --- Hero Section --- */
+        .hero { text-align: center; padding: 80px 20px; animation: popup 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .hero h1 { font-size: 4rem; color: var(--primary); text-shadow: 3px 3px 0px white, 6px 6px 0px var(--border-color); margin-bottom: 15px; }
+        .hero p { font-size: 1.5rem; font-weight: 600; background: white; border: 3px solid var(--border-color); display: inline-block; padding: 10px 25px; border-radius: 30px; box-shadow: 4px 4px 0px var(--primary-light); }
 
-        /* Avatar Box */
-        .avatar-box { grid-column: span 1; grid-row: span 2; padding: 0; display: flex; flex-direction: column; }
-        .avatar-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.95; transition: 0.5s; }
-        .avatar-box:hover img { transform: scale(1.05); }
+        /* --- Profile Layout --- */
+        .profile-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 30px; }
+        .avatar-container { border: 5px solid var(--border-color); border-radius: 24px; overflow: hidden; box-shadow: var(--shadow-3d); height: 400px; }
+        .avatar-container img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .avatar-container:hover img { transform: scale(1.1); }
+        
+        .tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+        .tag { background: var(--primary-light); color: white; padding: 5px 15px; border-radius: 20px; border: 2px solid var(--border-color); font-weight: bold; font-size: 0.9rem; }
 
-        /* Info Box */
-        .info-box { grid-column: span 2; display: flex; flex-direction: column; justify-content: center; }
-        .info-box h2 { font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: var(--pink-dark); margin-bottom: 15px; border-bottom: 2px dashed var(--pink-accent); padding-bottom: 10px; display: inline-block;}
-        .info-list { list-style: none; font-size: 1.1rem; line-height: 2; }
-        .info-list i { color: var(--pink-accent); width: 30px; font-size: 1.2rem; }
-        .info-list strong { color: var(--pink-dark); }
+        /* --- Likes & Dislikes --- */
+        .preferences-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; }
+        .pref-card h3 { font-size: 1.8rem; margin-bottom: 20px; border-bottom: 3px dashed var(--primary-light); padding-bottom: 10px; }
+        .pref-card.likes h3 { color: #d90429; }
+        .pref-card.dislikes h3 { color: #2b2d42; }
+        .pref-list { list-style: none; }
+        .pref-list li { margin-bottom: 15px; font-size: 1.1rem; font-weight: 600; display: flex; align-items: flex-start; gap: 10px; }
+        .pref-list i { font-size: 1.3rem; margin-top: 3px; }
+        .likes .pref-list i { color: #ff4d6d; }
+        .dislikes .pref-list i { color: #8d99ae; }
 
-        /* Social Box */
-        .social-box { grid-column: span 2; display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap; gap: 15px; }
-        .btn-social {
-            padding: 12px 25px; border-radius: 50px; text-decoration: none; color: white; font-weight: bold; display: flex; align-items: center; gap: 8px; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .btn-social.fb { background: #1877F2; }
-        .btn-social.ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
-        .btn-social.tt { background: #000000; }
-        .btn-social.lk { background: #FFB000; }
-        .btn-social:hover { transform: scale(1.1); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+        /* --- Zodiac Section (Thần Nông) --- */
+        .zodiac-card { background: linear-gradient(135deg, #240046, #3c096c); color: white; border-color: #10002b; box-shadow: 6px 6px 0px #10002b; text-align: center; }
+        .zodiac-card h2 { color: #e0aaff; font-size: 2.5rem; text-shadow: 2px 2px 0px #10002b; margin-bottom: 20px;}
+        .zodiac-traits { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
+        .trait-box { background: rgba(255,255,255,0.1); border: 2px solid #e0aaff; padding: 15px 20px; border-radius: 15px; backdrop-filter: blur(5px); width: 200px; }
+        .trait-box i { font-size: 2rem; color: #c77dff; margin-bottom: 10px; }
 
-        /* Gallery Title */
-        .gallery-title { text-align: center; font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: var(--pink-dark); margin-bottom: 30px; animation: fadeIn 1.5s; }
+        /* --- Gallery (Bố cục lộn xộn có chủ ý) --- */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); grid-auto-rows: 200px; gap: 20px; }
+        .gal-item { border: 4px solid var(--border-color); border-radius: 15px; overflow: hidden; box-shadow: 4px 4px 0px var(--border-color); cursor: pointer; position: relative; }
+        .gal-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+        .gal-item:hover img { transform: scale(1.1); filter: brightness(0.8); }
+        .gal-item::after { content: 'Xem ảnh 🌸'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-family: 'Mali'; font-size: 1.2rem; opacity: 0; transition: 0.3s; background: rgba(89, 13, 34, 0.7); padding: 5px 15px; border-radius: 20px; border: 2px solid white; }
+        .gal-item:hover::after { opacity: 1; }
+        .tall { grid-row: span 2; }
+        .wide { grid-column: span 2; }
 
-        /* Modern Masonry Gallery */
-        .gallery {
-            columns: 3 250px; column-gap: 20px;
-        }
-        .gallery-item {
-            margin-bottom: 20px; break-inside: avoid; border-radius: 15px; overflow: hidden;
-            box-shadow: var(--shadow); cursor: none; position: relative; border: 3px solid white;
-        }
-        .gallery-item img {
-            width: 100%; display: block; transition: 0.5s ease;
-        }
-        .gallery-item:hover img { transform: scale(1.1); filter: brightness(1.1); }
-        .gallery-item::after {
-            content: '🌸 Zoom'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            color: white; font-weight: bold; font-size: 1.2rem; text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
-            opacity: 0; transition: 0.3s; pointer-events: none;
-        }
-        .gallery-item:hover::after { opacity: 1; }
+        /* --- Minigame Section --- */
+        .minigame-card { background: #e0fbfc; border-color: #2b2d42; box-shadow: 6px 6px 0px #2b2d42; text-align: center; }
+        .minigame-card h2 { color: #ef233c; margin-bottom: 10px; font-size: 2.2rem; }
+        .game-stats { font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; color: #2b2d42; }
+        .memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; max-width: 600px; margin: 0 auto; perspective: 1000px; }
+        .memory-card { width: 100%; aspect-ratio: 1; position: relative; cursor: pointer; transform-style: preserve-3d; transition: transform 0.5s; border-radius: 15px; }
+        .memory-card.flip { transform: rotateY(180deg); }
+        .front, .back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border: 3px solid var(--border-color); border-radius: 15px; box-shadow: 3px 3px 0px var(--border-color); }
+        .front { background: var(--primary); display: flex; justify-content: center; align-items: center; font-size: 3rem; color: white; }
+        .back { background: white; transform: rotateY(180deg); overflow: hidden; }
+        .back img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Lightbox (Xem ảnh to) */
-        .lightbox {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255,229,236, 0.95); backdrop-filter: blur(8px);
-            z-index: 100000; display: none; justify-content: center; align-items: center; opacity: 0; transition: 0.3s;
-        }
+        /* Lightbox & Music */
+        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(89, 13, 34, 0.9); z-index: 1000; display: none; justify-content: center; align-items: center; opacity: 0; transition: 0.3s; }
         .lightbox.active { display: flex; opacity: 1; }
-        .lightbox img { max-width: 90%; max-height: 90vh; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); border: 5px solid white; animation: zoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .close-btn { position: absolute; top: 30px; right: 40px; font-size: 2.5rem; color: var(--pink-dark); font-weight: bold; transition: 0.3s; }
-        .close-btn:hover { transform: rotate(90deg) scale(1.2); }
+        .lightbox img { max-width: 80%; max-height: 80vh; border: 5px solid white; border-radius: 20px; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
+        .close-lb { position: absolute; top: 20px; right: 40px; font-size: 3rem; color: white; cursor: pointer; font-family: 'Mali'; }
 
-        /* Music Player Float */
-        .music-player {
-            position: fixed; bottom: 30px; right: 30px; background: white; border-radius: 50px;
-            padding: 10px 20px; display: flex; align-items: center; gap: 15px; box-shadow: var(--shadow); z-index: 99; border: 2px solid var(--pink-accent); transition: 0.3s;
+        .music-float { position: fixed; bottom: 20px; left: 20px; z-index: 100; }
+
+        @keyframes popup { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        
+        @media (max-width: 768px) {
+            .profile-grid, .preferences-grid { grid-template-columns: 1fr; }
+            .memory-grid { grid-template-columns: repeat(3, 1fr); }
+            .hero h1 { font-size: 3rem; }
         }
-        .music-player:hover { transform: translateY(-5px); }
-        .play-btn { background: var(--pink-dark); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; display: flex; justify-content: center; align-items: center; transition: 0.3s; }
-        .play-btn:hover { background: var(--pink-accent); }
-        .music-info p { font-size: 0.9rem; font-weight: bold; color: var(--text-main); margin: 0;}
-        .music-info span { font-size: 0.75rem; color: var(--text-light); }
-
-        /* Animations */
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes zoomIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-        /* Responsive */
-        @media (max-width: 900px) { .bento-grid { grid-template-columns: 1fr; } .avatar-box, .info-box, .social-box { grid-column: span 1; } .gallery { columns: 2 150px; } * { cursor: auto !important; } .cursor-dot, .cursor-outline { display: none; } }
-        @media (max-width: 500px) { .gallery { columns: 1 100%; } .hero h1 { font-size: 3rem; } .music-player { bottom: 15px; right: 15px; padding: 5px 15px; } }
     </style>
 </head>
 <body>
 
-    <div class="cursor-dot" id="cursor-dot"></div>
-    <div class="cursor-outline" id="cursor-outline"></div>
-
-    <div id="petals-container"></div>
-
-    <div class="music-player">
-        <button class="play-btn" id="play-music"><i class="fas fa-play"></i></button>
-        <div class="music-info">
-            <p>Nhạc Cho Cá 🎵</p>
-            <span id="music-status">Nhấn để phát nhạc</span>
-        </div>
-        <audio id="bg-audio" loop>
-            <source src="https://www.bensound.com/bensound-music/bensound-tenderness.mp3" type="audio/mpeg">
+    <div class="music-float">
+        <button class="btn-3d" id="musicBtn"><i class="fas fa-music"></i> Phát nhạc nè</button>
+        <audio id="bgMusic" loop>
+            <source src="https://www.bensound.com/bensound-music/bensound-cute.mp3" type="audio/mpeg">
         </audio>
     </div>
 
     <div class="container">
         <div class="hero">
             <h1>Nguyễn Thùy Linh</h1>
-            <p>Một chút dịu dàng, một chút cá tính 🌸</p>
+            <p>Xin chào! Tớ là Cá Nhỏ 🐟</p>
         </div>
 
-        <div class="bento-grid">
-            
-            <div class="glass-card avatar-box">
-                <img src="https://i.ibb.co/XxN3jbgv/c0883bf8-c1f4-4cda-bb60-37ead1cfe0af.jpg" alt="Avatar của Cá">
+        <div class="card profile-grid">
+            <div class="avatar-container">
+                <img src="https://i.ibb.co/C3kvzs25/23c34ffe-be6a-48cd-b67d-83b59b11a519.jpg" alt="Thùy Linh">
             </div>
+            <div class="info-content">
+                <h2>Về tớ một chút nhé!</h2>
+                <p style="font-size: 1.1rem; line-height: 1.8; margin-top: 15px; font-weight: 500;">
+                    Tớ sinh ngày <strong>05/11/2026</strong>. Tớ là một cô gái với vô vàn sở thích thú vị. Mọi người hay gọi tớ là Cá. Tớ thích sự nhộn nhịp nhưng cũng có lúc trầm ngâm. Cứ lướt xuống để hiểu thêm về tớ nha!
+                </p>
+                <div class="tags">
+                    <span class="tag">#XinhĐẹp</span>
+                    <span class="tag">#CáNhỏ</span>
+                    <span class="tag">#ThầnNông</span>
+                    <span class="tag">#YêuCáiĐẹp</span>
+                </div>
+                <div style="margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap;">
+                    <a href="https://www.facebook.com/swt.juwi" target="_blank" class="btn-3d"><i class="fab fa-facebook"></i> Facebook</a>
+                    <a href="https://www.instagram.com/t_uy.hnil" target="_blank" class="btn-3d"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="https://www.tiktok.com/@n.tli_h" target="_blank" class="btn-3d"><i class="fab fa-tiktok"></i> TikTok</a>
+                </div>
+            </div>
+        </div>
 
-            <div class="glass-card info-box">
-                <h2>Thông Tin Về Cá</h2>
-                <ul class="info-list">
-                    <li><i class="fas fa-fish"></i> <strong>Biệt danh:</strong> Cá nhỏ đáng yêu</li>
-                    <li><i class="fas fa-birthday-cake"></i> <strong>Ngày sinh:</strong> 05/11/2026</li>
-                    <li><i class="fas fa-heart"></i> <strong>Sở thích:</strong> Lưu giữ những khoảnh khắc đẹp</li>
-                    <li><i class="fas fa-star"></i> <strong>Cung hoàng đạo:</strong> Thần Nông</li>
+        <div class="preferences-grid">
+            <div class="card pref-card likes">
+                <h3><i class="fas fa-heart"></i> Tớ siêu thích...</h3>
+                <ul class="pref-list">
+                    <li><i class="fas fa-camera-retro"></i> Đi chơi, đi chụp Photobooth & xem phim.</li>
+                    <li><i class="fas fa-lipstick"></i> Makeup, làm đẹp và tự chụp ảnh.</li>
+                    <li><i class="fas fa-cut"></i> Làm đồ handmade tỉ mỉ & làm bánh ngon.</li>
+                    <li><i class="fas fa-gamepad"></i> Chơi game giải trí.</li>
+                    <li><i class="fas fa-sack-dollar"></i> Kiếm tiền (đam mê to lớn!), nhận lì xì.</li>
+                    <li><i class="fas fa-users"></i> Làm bạn với tất cả mọi người.</li>
+                    <li><i class="fas fa-pepper-hot"></i> Ăn mì cay, gà Jollibee, lẩu (nhưng ráng giữ dáng nên ăn ít 🥲).</li>
+                    <li><i class="fas fa-gift"></i> Được tặng quà và cũng RẤT THÍCH tặng quà cho người khác!</li>
                 </ul>
             </div>
-
-            <div class="glass-card social-box">
-                <a href="https://www.facebook.com/swt.juwi" target="_blank" class="btn-social fb"><i class="fab fa-facebook-f"></i> Facebook</a>
-                <a href="https://www.instagram.com/t_uy.hnil" target="_blank" class="btn-social ig"><i class="fab fa-instagram"></i> Instagram</a>
-                <a href="https://www.tiktok.com/@n.tli_h" target="_blank" class="btn-social tt"><i class="fab fa-tiktok"></i> TikTok</a>
-                <a href="https://locket.cam/emlinhday" target="_blank" class="btn-social lk"><i class="fas fa-camera"></i> Locket</a>
+            <div class="card pref-card dislikes">
+                <h3><i class="fas fa-heart-crack"></i> Tớ cực ghét...</h3>
+                <ul class="pref-list">
+                    <li><i class="fas fa-bug"></i> Côn trùng! Nhìn kinh kinh, sợ lắm luôn.</li>
+                    <li><i class="fas fa-calculator"></i> Môn Toán.</li>
+                    <li><i class="fas fa-magnet"></i> Môn Lý.</li>
+                    <li><i class="fas fa-flask"></i> Môn Hóa. (Tóm lại là ghét ban Tự Nhiên =))) )</li>
+                </ul>
             </div>
         </div>
 
-        <h2 class="gallery-title">Album Của Cá 📸</h2>
+        <div class="card zodiac-card">
+            <h2><i class="fas fa-moon"></i> Giải Mã Thần Nông (Scorpio)</h2>
+            <p style="font-size: 1.2rem; max-width: 800px; margin: 0 auto; line-height: 1.6;">
+                Sinh ngày 05/11, tớ mang trong mình dòng máu của Bọ Cạp (Thần Nông). Bề ngoài có vẻ tĩnh lặng, kiêu kỳ nhưng bên trong lại cực kỳ ấm áp và cuồng nhiệt. 
+            </p>
+            <div class="zodiac-traits">
+                <div class="trait-box">
+                    <i class="fas fa-eye"></i>
+                    <h3>Sắc sảo</h3>
+                    <p style="font-size:0.9rem; margin-top:5px;">Trực giác cực nhạy, khó ai lừa được Cá.</p>
+                </div>
+                <div class="trait-box">
+                    <i class="fas fa-fire"></i>
+                    <h3>Nhiệt huyết</h3>
+                    <p style="font-size:0.9rem; margin-top:5px;">Làm gì là làm tới cùng, yêu ghét rõ ràng.</p>
+                </div>
+                <div class="trait-box">
+                    <i class="fas fa-lock"></i>
+                    <h3>Chung thủy</h3>
+                    <p style="font-size:0.9rem; margin-top:5px;">Rất trân trọng tình bạn và tình cảm chân thành.</p>
+                </div>
+            </div>
+        </div>
 
-        <div class="gallery">
-            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/XxN3jbgv/c0883bf8-c1f4-4cda-bb60-37ead1cfe0af.jpg" alt="Ảnh 1"></div>
-            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/FqNxpsk5/432fca4d-4e4f-4e8a-93f3-ce8dc7e7db19.jpg" alt="Ảnh 2"></div>
-            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/C3kvzs25/23c34ffe-be6a-48cd-b67d-83b59b11a519.jpg" alt="Ảnh 3"></div>
-            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/XxLM8zJq/9c9738d3-7d92-4a20-82e0-15060f6c866e.jpg" alt="Ảnh 4"></div>
-            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/jZ9BVrs4/084da3fe-fdb8-40a1-9e1f-54479ea72bf5.jpg" alt="Ảnh 5"></div>
-            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/tTf83M6B/a0dae0cb-6e8c-4893-86c3-8c7ec39534ec.jpg" alt="Ảnh 6"></div>
-            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/Sz0L2C0/52ceb30d-12b7-437d-8119-e9a846dfcd70.jpg" alt="Ảnh 7"></div>
-            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/vx8VXGzy/1ae2a1c6-6a6c-446c-a919-9ed28bd469b3.jpg" alt="Ảnh 8"></div>
-            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/HTCzNbKh/e3c9889a-9a5d-4b25-b699-20068d1ad637.jpg" alt="Ảnh 9"></div>
-            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/FLLs2L4W/659084bc-e47c-4c69-a660-ae9332085b52.jpg" alt="Ảnh 10"></div>
-            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/GvwCBzxc/4909af80-2ad2-427e-a159-70f1d2f20890.jpg" alt="Ảnh 11"></div>
-            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/Zp3mPSL0/a5b6bc44-3001-4ba2-a803-a4c9d7d4b3d3.jpg" alt="Ảnh 12"></div>
-            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/ccS1VzkJ/580ca18e-cc99-4b21-87a4-15df2529a637.jpg" alt="Ảnh 13"></div>
-            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/XxN3jbgv/c0883bf8-c1f4-4cda-bb60-37ead1cfe0af.jpg" alt="Ảnh 14"></div>
+        <div class="card minigame-card">
+            <h2>🎮 Minigame: Tìm Cá Nhỏ</h2>
+            <p class="game-stats">Lật thẻ để tìm 2 bức ảnh giống nhau nhé! | Số bước: <span id="moves">0</span></p>
+            <div class="memory-grid" id="memory-game">
+                </div>
+            <button class="btn-3d" style="margin-top: 25px;" onclick="initGame()"><i class="fas fa-redo"></i> Chơi Lại</button>
+        </div>
+
+        <h2 style="text-align: center; font-size: 3rem; margin: 50px 0 20px; color: var(--primary);">Album Của Tớ 📸</h2>
+        <div class="gallery-grid">
+            <div class="gal-item tall" onclick="openLB(this)"><img src="https://i.ibb.co/XxN3jbgv/c0883bf8-c1f4-4cda-bb60-37ead1cfe0af.jpg" alt="Img"></div>
+            <div class="gal-item" onclick="openLB(this)"><img src="https://i.ibb.co/FqNxpsk5/432fca4d-4e4f-4e8a-93f3-ce8dc7e7db19.jpg" alt="Img"></div>
+            <div class="gal-item wide" onclick="openLB(this)"><img src="https://i.ibb.co/XxLM8zJq/9c9738d3-7d92-4a20-82e0-15060f6c866e.jpg" alt="Img"></div>
+            <div class="gal-item" onclick="openLB(this)"><img src="https://i.ibb.co/jZ9BVrs4/084da3fe-fdb8-40a1-9e1f-54479ea72bf5.jpg" alt="Img"></div>
+            <div class="gal-item tall" onclick="openLB(this)"><img src="https://i.ibb.co/tTf83M6B/a0dae0cb-6e8c-4893-86c3-8c7ec39534ec.jpg" alt="Img"></div>
+            <div class="gal-item" onclick="openLB(this)"><img src="https://i.ibb.co/Sz0L2C0/52ceb30d-12b7-437d-8119-e9a846dfcd70.jpg" alt="Img"></div>
+            <div class="gal-item wide" onclick="openLB(this)"><img src="https://i.ibb.co/vx8VXGzy/1ae2a1c6-6a6c-446c-a919-9ed28bd469b3.jpg" alt="Img"></div>
+            <div class="gal-item" onclick="openLB(this)"><img src="https://i.ibb.co/HTCzNbKh/e3c9889a-9a5d-4b25-b699-20068d1ad637.jpg" alt="Img"></div>
+            <div class="gal-item" onclick="openLB(this)"><img src="https://i.ibb.co/FLLs2L4W/659084bc-e47c-4c69-a660-ae9332085b52.jpg" alt="Img"></div>
+            <div class="gal-item tall" onclick="openLB(this)"><img src="https://i.ibb.co/GvwCBzxc/4909af80-2ad2-427e-a159-70f1d2f20890.jpg" alt="Img"></div>
+            <div class="gal-item wide" onclick="openLB(this)"><img src="https://i.ibb.co/Zp3mPSL0/a5b6bc44-3001-4ba2-a803-a4c9d7d4b3d3.jpg" alt="Img"></div>
+            <div class="gal-item" onclick="openLB(this)"><img src="https://i.ibb.co/ccS1VzkJ/580ca18e-cc99-4b21-87a4-15df2529a637.jpg" alt="Img"></div>
         </div>
     </div>
 
     <div class="lightbox" id="lightbox">
-        <span class="close-btn" onclick="closeLightbox()">&times;</span>
-        <img id="lightbox-img" src="" alt="Zoomed Image">
+        <span class="close-lb" onclick="closeLB()">X</span>
+        <img id="lb-img" src="" alt="Zoomed">
     </div>
 
     <script>
-        // --- Toàn bộ JS Tương Tác ---
-
-        // 1. Hiệu ứng con trỏ chuột chạy theo
-        const cursorDot = document.getElementById("cursor-dot");
-        const cursorOutline = document.getElementById("cursor-outline");
-        
-        // Kiểm tra xem có phải màn hình máy tính không (điện thoại không cần chuột)
-        if(window.innerWidth > 900) {
-            window.addEventListener("mousemove", function (e) {
-                const posX = e.clientX;
-                const posY = e.clientY;
-                
-                cursorDot.style.left = `${posX}px`;
-                cursorDot.style.top = `${posY}px`;
-                
-                // Outline chạy theo trễ một chút tạo hiệu ứng mượt
-                cursorOutline.animate({
-                    left: `${posX}px`,
-                    top: `${posY}px`
-                }, { duration: 500, fill: "forwards" });
-            });
-
-            // Hiệu ứng phình to chuột khi hover vào link hoặc ảnh
-            const hoverElements = document.querySelectorAll('a, button, .gallery-item, .glass-card');
-            hoverElements.forEach(el => {
-                el.addEventListener('mouseenter', () => { cursorOutline.style.width = '60px'; cursorOutline.style.height = '60px'; cursorOutline.style.borderColor = '#FB6F92'; cursorOutline.style.backgroundColor = 'rgba(251, 111, 146, 0.1)'; });
-                el.addEventListener('mouseleave', () => { cursorOutline.style.width = '40px'; cursorOutline.style.height = '40px'; cursorOutline.style.borderColor = '#FF8FAB'; cursorOutline.style.backgroundColor = 'transparent'; });
-            });
-        }
-
-        // 2. JS tạo Hoa anh đào rơi
-        const petalsContainer = document.getElementById('petals-container');
-        function createPetal() {
-            const petal = document.createElement('div');
-            petal.classList.add('petal');
-            
-            // Random kích thước, vị trí và thời gian rơi
-            const size = Math.random() * 10 + 5;
-            petal.style.width = `${size}px`;
-            petal.style.height = `${size}px`;
-            petal.style.left = `${Math.random() * 100}vw`;
-            petal.style.animationDuration = `${Math.random() * 3 + 4}s`; // 4-7s
-            
-            // Đổ bóng màu hồng ngẫu nhiên
-            const colors = ['#FFB6C1', '#FFC0CB', '#FFF0F5', '#FF69B4'];
-            petal.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            
-            petalsContainer.appendChild(petal);
-            
-            // Xóa cánh hoa sau khi rơi xong để không nặng máy
-            setTimeout(() => { petal.remove(); }, 7000);
-        }
-        setInterval(createPetal, 300); // Mỗi 0.3s tạo 1 cánh hoa
-
-        // 3. Trình phát nhạc
-        const audio = document.getElementById('bg-audio');
-        const playBtn = document.getElementById('play-music');
-        const playIcon = playBtn.querySelector('i');
-        const musicStatus = document.getElementById('music-status');
+        // 1. Âm nhạc
+        const musicBtn = document.getElementById('musicBtn');
+        const bgMusic = document.getElementById('bgMusic');
         let isPlaying = false;
+        bgMusic.volume = 0.4;
 
-        audio.volume = 0.5; // Đặt âm lượng 50%
-
-        playBtn.addEventListener('click', () => {
+        musicBtn.addEventListener('click', () => {
             if (isPlaying) {
-                audio.pause();
-                playIcon.classList.remove('fa-pause');
-                playIcon.classList.add('fa-play');
-                musicStatus.textContent = "Đã tạm dừng";
+                bgMusic.pause();
+                musicBtn.innerHTML = '<i class="fas fa-music"></i> Phát nhạc nè';
             } else {
-                audio.play();
-                playIcon.classList.remove('fa-play');
-                playIcon.classList.add('fa-pause');
-                musicStatus.textContent = "Đang phát nhạc ~";
+                bgMusic.play();
+                musicBtn.innerHTML = '<i class="fas fa-pause"></i> Tạm dừng';
             }
             isPlaying = !isPlaying;
         });
 
-        // 4. Mở Ảnh To (Lightbox)
+        // 2. Lightbox Ảnh
         const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-
-        function openLightbox(element) {
-            const imgSrc = element.querySelector('img').src;
-            lightboxImg.src = imgSrc;
+        const lbImg = document.getElementById('lb-img');
+        function openLB(el) {
+            lbImg.src = el.querySelector('img').src;
             lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Khóa cuộn trang
+        }
+        function closeLB() { lightbox.classList.remove('active'); }
+        lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLB(); });
+
+        // 3. Minigame Lật Ảnh Logic
+        const gameGrid = document.getElementById('memory-game');
+        const movesDisplay = document.getElementById('moves');
+        // Chọn ra 6 ảnh đẹp nhất để làm game
+        const imagesForGame = [
+            "https://i.ibb.co/XxN3jbgv/c0883bf8-c1f4-4cda-bb60-37ead1cfe0af.jpg",
+            "https://i.ibb.co/FqNxpsk5/432fca4d-4e4f-4e8a-93f3-ce8dc7e7db19.jpg",
+            "https://i.ibb.co/XxLM8zJq/9c9738d3-7d92-4a20-82e0-15060f6c866e.jpg",
+            "https://i.ibb.co/jZ9BVrs4/084da3fe-fdb8-40a1-9e1f-54479ea72bf5.jpg",
+            "https://i.ibb.co/Sz0L2C0/52ceb30d-12b7-437d-8119-e9a846dfcd70.jpg",
+            "https://i.ibb.co/HTCzNbKh/e3c9889a-9a5d-4b25-b699-20068d1ad637.jpg"
+        ];
+        
+        let cardsArr = [];
+        let hasFlippedCard = false;
+        let lockBoard = false;
+        let firstCard, secondCard;
+        let moves = 0;
+        let matched = 0;
+
+        function initGame() {
+            gameGrid.innerHTML = '';
+            moves = 0; matched = 0;
+            movesDisplay.innerText = moves;
+            
+            // Nhân đôi ảnh để tạo cặp và xáo trộn
+            let gameImages = [...imagesForGame, ...imagesForGame];
+            gameImages.sort(() => 0.5 - Math.random());
+
+            gameImages.forEach(imgSrc => {
+                const card = document.createElement('div');
+                card.classList.add('memory-card');
+                card.dataset.image = imgSrc;
+                
+                card.innerHTML = `
+                    <div class="front">🌸</div>
+                    <div class="back"><img src="${imgSrc}" alt="Cá"></div>
+                `;
+                card.addEventListener('click', flipCard);
+                gameGrid.appendChild(card);
+            });
         }
 
-        function closeLightbox() {
-            lightbox.classList.remove('active');
-            document.body.style.overflow = 'auto'; // Mở lại cuộn trang
+        function flipCard() {
+            if (lockBoard) return;
+            if (this === firstCard) return;
+
+            this.classList.add('flip');
+
+            if (!hasFlippedCard) {
+                hasFlippedCard = true;
+                firstCard = this;
+                return;
+            }
+
+            secondCard = this;
+            moves++;
+            movesDisplay.innerText = moves;
+            checkForMatch();
         }
 
-        // Click ra ngoài ảnh cũng đóng được
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) { closeLightbox(); }
-        });
+        function checkForMatch() {
+            let isMatch = firstCard.dataset.image === secondCard.dataset.image;
+            isMatch ? disableCards() : unflipCards();
+        }
+
+        function disableCards() {
+            firstCard.removeEventListener('click', flipCard);
+            secondCard.removeEventListener('click', flipCard);
+            matched += 2;
+            if(matched === 12) {
+                setTimeout(() => alert(`Chúc mừng! Bạn đã tìm được toàn bộ ảnh của Cá trong ${moves} bước! 🎉`), 500);
+            }
+            resetBoard();
+        }
+
+        function unflipCards() {
+            lockBoard = true;
+            setTimeout(() => {
+                firstCard.classList.remove('flip');
+                secondCard.classList.remove('flip');
+                resetBoard();
+            }, 1000);
+        }
+
+        function resetBoard() {
+            [hasFlippedCard, lockBoard] = [false, false];
+            [firstCard, secondCard] = [null, null];
+        }
+
+        // Khởi động game khi tải trang
+        initGame();
     </script>
 </body>
 </html>
