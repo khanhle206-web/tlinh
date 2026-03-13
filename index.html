@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cá's World 🐟 | Thùy Linh</title>
+    <title>Cá's LED World 🐟 | Thùy Linh</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500;1,700;1,900&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -46,11 +46,13 @@
             overflow-x: hidden;
             scroll-behavior: smooth;
             transition: background 0.5s ease, color 0.5s ease;
+            cursor: none; /* Ẩn trỏ chuột mặc định để dùng custom cursor */
         }
 
         h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 25px; position: relative; z-index: 10; }
         .section-p { padding: 120px 0; }
+        .text-center { text-align: center; }
 
         /* ============================================================
            2. ANIMATIONS & EFFECTS
@@ -64,6 +66,12 @@
         @keyframes bgGradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         @keyframes heartbeat { 0% { transform: scale(1); } 25% { transform: scale(1.1); } 50% { transform: scale(1); } 75% { transform: scale(1.1); } 100% { transform: scale(1); } }
         @keyframes borderPulse { 0% { border-color: rgba(255,143,171,0.2); } 50% { border-color: rgba(255,143,171,1); } 100% { border-color: rgba(255,143,171,0.2); } }
+        
+        /* Hiệu ứng trỏ chuột nổ (Ripple) */
+        @keyframes clickRipple {
+            0% { width: 0px; height: 0px; opacity: 1; border-width: 4px; }
+            100% { width: 120px; height: 120px; opacity: 0; border-width: 0px; }
+        }
 
         .reveal { opacity: 0; transform: translateY(80px); transition: all 1s cubic-bezier(0.5, 0, 0, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
@@ -85,18 +93,24 @@
         .enter-btn:hover { background: #FF8FAB; color: white; transform: scale(1.1); }
 
         /* ============================================================
-           4. CURSOR & PARTICLES (MƯA TIM / CÁ)
+           4. CURSOR & PARTICLES (MƯA TIM / CÁ & CLICK)
            ============================================================ */
         .cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 100000; pointer-events: none; transition: background-color 0.5s, border-color 0.5s; }
         .cursor-dot { width: 10px; height: 10px; background-color: var(--cursor-main); box-shadow: var(--led-shadow);}
         .cursor-ring { width: 45px; height: 45px; border: 2px solid var(--cursor-main); transition: 0.1s linear; box-shadow: var(--led-shadow); }
         
+        .click-effect {
+            position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
+            border-radius: 50%; border: solid var(--pink-accent); pointer-events: none;
+            z-index: 99999; animation: clickRipple 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
         #particle-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
         .falling-item { position: absolute; top: -50px; user-select: none; animation: fall linear infinite; font-size: 24px; opacity: 0.6; filter: drop-shadow(0 0 5px rgba(255,143,171,0.5));}
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
         /* ============================================================
-           5. NAVBAR (FIXED GIAO DIỆN)
+           5. NAVBAR
            ============================================================ */
         nav {
             position: fixed; top: 20px; left: 50%; transform: translateX(-50%); width: 95%; max-width: 1100px; z-index: 999;
@@ -105,12 +119,13 @@
             border: 1px solid var(--glass-border); box-shadow: var(--led-shadow); transition: 0.5s ease;
             animation: borderPulse 4s infinite;
         }
-        .nav-logo { font-size: 2.2rem; color: var(--pink-accent); font-weight: 900; text-decoration: none; text-shadow: var(--led-shadow); display: flex; align-items: center; gap: 10px;}
+        .nav-logo { font-size: 2.2rem; color: var(--pink-accent); font-weight: 900; text-decoration: none; text-shadow: var(--led-shadow); display: flex; align-items: center; gap: 10px; cursor: pointer;}
         .nav-logo i { font-size: 1.5rem; animation: float 3s ease-in-out infinite; }
-        .nav-links { display: flex; gap: 15px; list-style: none; align-items: center; margin: 0 auto; }
+        .nav-links { display: flex; gap: 10px; list-style: none; align-items: center; margin: 0 auto; }
         .nav-links a { 
-            text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 1.1rem; 
-            padding: 10px 20px; border-radius: 30px; transition: 0.3s; position: relative; overflow: hidden;
+            text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 1.05rem; 
+            padding: 10px 15px; border-radius: 30px; transition: 0.3s; position: relative; overflow: hidden;
+            cursor: pointer;
         }
         .nav-links a::before {
             content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -149,7 +164,7 @@
             text-decoration: none; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 1.2rem;
             border: 2px solid var(--pink-accent); position: relative; z-index: 1; overflow: hidden;
             background: rgba(25, 0, 10, 0.4); color: var(--text-main); transition: 0.3s ease;
-            animation: glowingButton 3s infinite;
+            animation: glowingButton 3s infinite; cursor: pointer;
         }
         .btn-led::after { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, var(--pink-accent), var(--pink-dark)); opacity: 0; z-index: -1; transition: 0.4s; }
         .btn-led:hover { transform: translateY(-5px) scale(1.05); color: white; }
@@ -163,7 +178,7 @@
         .image-morph img { width: 100%; height: 100%; object-fit: cover; filter: brightness(1.1) contrast(1.05); }
 
         /* ============================================================
-           7. ABOUT & STATS SECTION (CẬP NHẬT 2008 & THÊM TÍNH NĂNG)
+           7. ABOUT & STATS SECTION
            ============================================================ */
         .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
         .info-card-box { background: var(--bg-bento); backdrop-filter: blur(10px); border: 2px solid var(--glass-border); border-radius: 24px; padding: 40px; box-shadow: var(--led-shadow); transition: 0.3s; }
@@ -172,7 +187,6 @@
         .about-links { list-style: none; font-size: 1.15rem; font-weight: 600; line-height: 2.2; margin-top: 20px;}
         .about-links i { width: 35px; color: var(--pink-accent); font-size: 1.3rem; }
         
-        /* Progress Bars */
         .stats-container { margin-top: 30px; }
         .stat-item { margin-bottom: 15px; }
         .stat-title { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 5px; font-size: 1.1rem;}
@@ -182,7 +196,7 @@
         @keyframes sweep { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
         /* ============================================================
-           8. TIMELINE (NEW FEATURE)
+           8. TIMELINE
            ============================================================ */
         .timeline-section { background: rgba(255, 77, 109, 0.02); }
         .sec-title { text-align: center; font-size: 3.5rem; color: var(--pink-accent); margin-bottom: 60px; text-shadow: var(--led-shadow);}
@@ -198,7 +212,7 @@
         .tl-content p { font-weight: 500; font-size: 1.1rem; }
 
         /* ============================================================
-           9. LIKES / DISLIKES & GALLERY (ENHANCED)
+           9. LIKES / DISLIKES & GALLERY
            ============================================================ */
         .pref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
         .pref-title { font-size: 2.5rem; display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
@@ -216,10 +230,10 @@
         .art-item:hover .art-caption { opacity: 1; transform: translateY(0); }
 
         /* ============================================================
-           10. MINIGAME: HỒ CÁ NHỎ (NEW FEATURE)
+           10. MINIGAME: HỒ CÁ NHỎ
            ============================================================ */
         .minigame-section { background: rgba(25, 0, 10, 0.4); text-align: center; border-top: 2px solid var(--pink-accent); border-bottom: 2px solid var(--pink-accent); box-shadow: inset 0 0 50px rgba(255, 77, 109, 0.2);}
-        #game-board { width: 100%; max-width: 800px; height: 400px; margin: 0 auto; background: rgba(0, 150, 255, 0.1); border: 4px dashed var(--pink-accent); border-radius: 30px; position: relative; overflow: hidden; cursor: crosshair; box-shadow: var(--led-shadow);}
+        #game-board { width: 100%; max-width: 800px; height: 400px; margin: 0 auto; background: rgba(0, 150, 255, 0.1); border: 4px dashed var(--pink-accent); border-radius: 30px; position: relative; overflow: hidden; box-shadow: var(--led-shadow);}
         .game-fish { position: absolute; font-size: 40px; cursor: pointer; user-select: none; transition: transform 0.2s; filter: drop-shadow(0 0 10px rgba(255,255,255,0.8));}
         .game-fish:active { transform: scale(0.8); }
         .game-ui { display: flex; justify-content: space-around; font-size: 1.5rem; font-weight: 900; margin-bottom: 20px; color: var(--pink-accent); text-shadow: var(--led-shadow);}
@@ -227,12 +241,37 @@
         .game-btn:hover { background: var(--pink-dark); transform: scale(1.1); }
 
         /* ============================================================
-           11. FOOTER & MESSAGE FORM
+           11. MAGIC QUOTE (TÍNH NĂNG MỚI THAY THẾ TIN NHẮN)
            ============================================================ */
-        footer { text-align: center; padding: 80px 0 40px; position: relative; background: var(--bg-bento); border-top: 1px solid var(--glass-border);}
-        .message-box { max-width: 600px; margin: 0 auto 50px; background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px; border: 2px solid var(--pink-accent); box-shadow: var(--led-shadow);}
-        .msg-input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 10px; border: 1px solid var(--pink-accent); background: rgba(0,0,0,0.2); color: var(--text-main); font-family: 'Quicksand'; font-size: 1rem; outline: none;}
-        .msg-input:focus { box-shadow: 0 0 15px rgba(255,77,109,0.5); }
+        .magic-section { background: var(--bg-bento); border-radius: 30px; padding: 50px; margin-bottom: 50px; border: 2px solid var(--pink-accent); box-shadow: var(--led-shadow); text-align: center; }
+        .magic-box { min-height: 150px; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        .quote-text { font-family: 'Playfair Display', serif; font-size: 2rem; font-style: italic; color: var(--pink-accent); margin-bottom: 30px; line-height: 1.4; transition: opacity 0.5s;}
+
+        /* ============================================================
+           12. KẾT NỐI VỚI CÁ (MẠNG XÃ HỘI NỔI BẬT)
+           ============================================================ */
+        .social-container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 40px; }
+        .social-card {
+            width: 180px; height: 180px; background: var(--bg-bento); border: 2px solid var(--glass-border); 
+            border-radius: 30px; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 1.2rem; gap: 15px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; position: relative; overflow: hidden;
+        }
+        .social-card i { font-size: 3.5rem; transition: 0.4s; }
+        .social-card::before { content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 100%; transition: 0.4s; z-index: -1; }
+        .social-card:hover { transform: translateY(-15px); color: white; border-color: transparent; box-shadow: var(--led-shadow); }
+        .social-card:hover i { transform: scale(1.2) rotate(10deg); color: white !important;}
+        .social-card:hover::before { top: 0; }
+        
+        /* Màu sắc riêng cho từng mạng xã hội */
+        .sc-fb i { color: #1877F2; } .sc-fb:hover::before { background: #1877F2; }
+        .sc-ig i { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; } .sc-ig:hover i { -webkit-text-fill-color: white; } .sc-ig:hover::before { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .sc-tt i { color: #000000; text-shadow: 2px 2px 0px #00f2fe, -2px -2px 0px #fe0979;} [data-theme="dark"] .sc-tt i { color: white; } .sc-tt:hover::before { background: #000000; } .sc-tt:hover i { color: white; text-shadow: none; }
+
+        /* ============================================================
+           13. FOOTER
+           ============================================================ */
+        footer { text-align: center; padding: 40px 0; border-top: 1px solid var(--glass-border); margin-top: 50px;}
         .footer-logo { font-size: 3rem; color: var(--pink-accent); font-family: 'Playfair Display'; margin-bottom: 10px; animation: heartbeat 2s infinite;}
         
         /* Fixed Elements */
@@ -280,14 +319,14 @@
     </div>
 
     <nav>
-        <a href="#" class="nav-logo"><i class="fas fa-fish"></i> Cá.</a>
+        <a href="#home" class="nav-logo"><i class="fas fa-fish"></i> Cá.</a>
         <ul class="nav-links">
             <li><a href="#home"><i class="fas fa-home"></i> Trang chủ</a></li>
             <li><a href="#about"><i class="fas fa-user"></i> Về Linh</a></li>
             <li><a href="#timeline"><i class="fas fa-route"></i> Hành trình</a></li>
-            <li><a href="#preferences"><i class="fas fa-heart"></i> Sở thích</a></li>
             <li><a href="#gallery"><i class="fas fa-images"></i> Ảnh xinh</a></li>
             <li><a href="#minigame"><i class="fas fa-gamepad"></i> Game</a></li>
+            <li><a href="#connect"><i class="fas fa-link"></i> Kết nối</a></li>
         </ul>
         <button id="theme-toggle"><i class="fas fa-moon"></i></button>
     </nav>
@@ -333,12 +372,12 @@
                             <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 100%;"></div></div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-title"><span>Trực giác Thần Nông 🔮</span><span>95%</span></div>
+                            <div class="stat-title"><span>Trực giác Thần Nông 🔮</span><span>99%</span></div>
                             <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 99%;"></div></div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-title"><span>Kỹ năng Makeup 💄</span><span>99%</span></div>
-                            <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 99%;"></div></div>
+                            <div class="stat-title"><span>Kỹ năng Makeup 💄</span><span>95%</span></div>
+                            <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 95%;"></div></div>
                         </div>
                     </div>
                 </div>
@@ -415,6 +454,40 @@
         </div>
     </section>
 
+    <section class="section-p" id="magic">
+        <div class="container reveal">
+            <h2 class="sec-title">Thông Điệp <span style="font-style: italic;">Vũ Trụ</span></h2>
+            <div class="magic-section">
+                <div class="magic-box">
+                    <div class="quote-text" id="quote-display">"Hãy chạm vào chiếc nút ma thuật bên dưới để xem vũ trụ muốn gửi gắm điều gì tới Cá ngày hôm nay nhé! ✨"</div>
+                    <button class="btn-led" id="btn-draw-quote"><i class="fas fa-star"></i> Rút Thông Điệp</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-p" id="connect" style="background: rgba(255, 77, 109, 0.02);">
+        <div class="container reveal">
+            <h2 class="sec-title" style="margin-bottom: 10px;">Kết Nối Với <span style="font-style: italic;">Cá Nhỏ</span></h2>
+            <p class="text-center" style="font-size: 1.2rem; color: var(--text-sub);">Đừng ngại ngùng, hãy click vào để làm quen với tớ nha! ❤️</p>
+            
+            <div class="social-container">
+                <a href="#" target="_blank" class="social-card sc-fb">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook</span>
+                </a>
+                <a href="#" target="_blank" class="social-card sc-ig">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
+                <a href="#" target="_blank" class="social-card sc-tt">
+                    <i class="fab fa-tiktok"></i>
+                    <span>TikTok</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <section class="art-gallery section-p" id="gallery">
         <div class="container reveal">
             <h2 class="sec-title">Phòng <span style="font-style: italic;">Trưng Bày</span></h2>
@@ -432,28 +505,15 @@
     </section>
 
     <footer>
-        <div class="container reveal">
+        <div class="container">
             <h3 class="footer-logo">Cá.</h3>
-            
-            <div class="message-box">
-                <h4 style="font-size: 1.5rem; margin-bottom: 20px; color: var(--pink-accent);">Gửi lời nhắn cho Cá 💌</h4>
-                <input type="text" class="msg-input" placeholder="Tên của bạn là gì nè?">
-                <textarea class="msg-input" rows="3" placeholder="Ghi lời chúc siêu cute vào đây nha..."></textarea>
-                <button class="btn-led" onclick="alert('Đã gửi thành công nha! Cảm ơn bạn rất nhiều! 🥰')"><i class="fas fa-paper-plane"></i> Gửi đi</button>
-            </div>
-            
-            <p style="font-size: 1.1rem; color: var(--text-sub); margin-bottom: 20px;">Cảm ơn đã dành thời gian ghé thăm trạm dừng chân của Thùy Linh!</p>
-            <div style="font-size: 1.5rem; color: var(--pink-accent);">
-                <i class="fab fa-facebook" style="margin: 0 10px; cursor: pointer;"></i>
-                <i class="fab fa-instagram" style="margin: 0 10px; cursor: pointer;"></i>
-                <i class="fab fa-tiktok" style="margin: 0 10px; cursor: pointer;"></i>
-            </div>
-            <p style="margin-top: 30px; font-size: 0.9rem; opacity: 0.7;">Bản quyền thuộc về bé Cá Sinh Năm 2008 ❤️ Mãi Đỉnh</p>
+            <p style="font-size: 1.1rem; color: var(--text-sub); margin-bottom: 10px;">Cảm ơn đã dành thời gian ghé thăm trạm dừng chân của Thùy Linh!</p>
+            <p style="font-size: 0.9rem; opacity: 0.7;">Bản quyền thuộc về bé Cá Sinh Năm 2008 ❤️ Mãi Đỉnh</p>
         </div>
     </footer>
 
     <script>
-        // --- 1. ENTRANCE SCREEN (Xử lý Âm nhạc & Hiện giao diện) ---
+        // --- 1. ENTRANCE SCREEN ---
         const entrance = document.getElementById('entrance-screen');
         const bgMusic = document.getElementById('bg-music');
         const playBtn = document.getElementById('play-btn');
@@ -486,19 +546,14 @@
             el.classList.add('falling-item');
             el.innerText = items[Math.floor(Math.random() * items.length)];
             el.style.left = Math.random() * 100 + 'vw';
-            el.style.animationDuration = Math.random() * 3 + 4 + 's'; // 4s - 7s
+            el.style.animationDuration = Math.random() * 3 + 4 + 's';
             el.style.fontSize = Math.random() * 15 + 15 + 'px';
             container.appendChild(el);
-            
-            // Xóa sau khi rớt xong để nhẹ máy
             setTimeout(() => { el.remove(); }, 7000);
         }
+        function startRainEffect() { setInterval(createParticle, 400); }
 
-        function startRainEffect() {
-            setInterval(createParticle, 400); // Cứ 0.4s rớt 1 cái
-        }
-
-        // --- 3. CUSTOM CURSOR ---
+        // --- 3. CUSTOM CURSOR & HIỆU ỨNG CLICK RIPPLE ---
         const dot = document.getElementById("cursor-dot");
         const ring = document.getElementById("cursor-ring");
         window.addEventListener("mousemove", (e) => {
@@ -506,8 +561,9 @@
             ring.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 100, fill: "forwards" });
         });
         
-        // Hiệu ứng click chuột (Nổ sóng)
-        window.addEventListener("click", () => {
+        // Tạo vòng sóng (Ripple) tỏa ra khi Click
+        window.addEventListener("click", (e) => {
+            // Hiệu ứng co giật của cái vòng ring (như cũ)
             ring.style.transform = "translate(-50%, -50%) scale(2)";
             ring.style.opacity = "0";
             setTimeout(() => {
@@ -516,9 +572,18 @@
                 ring.style.opacity = "1";
                 setTimeout(() => { ring.style.transition = "0.1s linear"; }, 50);
             }, 300);
+
+            // Hiệu ứng nổ Ripple mượt mà (MỚI)
+            const ripple = document.createElement("div");
+            ripple.classList.add("click-effect");
+            ripple.style.left = `${e.clientX}px`;
+            ripple.style.top = `${e.clientY}px`;
+            document.body.appendChild(ripple);
+            // Tự động xóa sau khi chạy xong animation (0.6s)
+            setTimeout(() => { ripple.remove(); }, 600);
         });
 
-        // --- 4. SCROLL REVEAL (Mượt mà) ---
+        // --- 4. SCROLL REVEAL ---
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
@@ -526,14 +591,12 @@
                 var elementTop = reveals[i].getBoundingClientRect().top;
                 if (elementTop < windowHeight - 80) reveals[i].classList.add("active");
             }
-            
-            // Nút cuộn lên đầu
             document.getElementById('scroll-top-btn').style.display = window.scrollY > 500 ? 'block' : 'none';
         }
         window.addEventListener("scroll", reveal);
-        reveal(); // Chạy ngay lần đầu
+        reveal(); 
 
-        // --- 5. TYPING EFFECT (Sửa mượt) ---
+        // --- 5. TYPING EFFECT ---
         const typingTextSpan = document.getElementById('typing');
         const phrases = ["Thần Nông cuốn hút...", "Chuyên gia Makeup...", "Nữ doanh nhân 2008...", "Giao diện siêu ngầu!"];
         let pIndex = 0; let cIndex = 0; let deleting = false;
@@ -567,17 +630,14 @@
             }
         });
 
-        // --- 7. MINIGAME: BẮT CÁ LOGIC ---
+        // --- 7. MINIGAME LOGIC ---
         const gameBoard = document.getElementById('game-board');
         const startBtn = document.getElementById('start-game-btn');
         const scoreUI = document.getElementById('game-score');
         const timeUI = document.getElementById('game-time');
         
-        let score = 0;
-        let timeLeft = 30;
-        let gameInterval, spawnInterval;
-        let isPlaying = false;
-
+        let score = 0; let timeLeft = 30;
+        let gameInterval, spawnInterval; let isPlaying = false;
         const fishIcons = ['🐠', '🐟', '🐡', '🦈', '🦀'];
 
         function spawnFishInGame() {
@@ -586,56 +646,67 @@
             fish.classList.add('game-fish');
             fish.innerText = fishIcons[Math.floor(Math.random() * fishIcons.length)];
             
-            // Random vị trí
-            const maxX = gameBoard.clientWidth - 50;
-            const maxY = gameBoard.clientHeight - 50;
-            fish.style.left = Math.random() * maxX + 'px';
-            fish.style.top = Math.random() * maxY + 'px';
+            const maxX = gameBoard.clientWidth - 50; const maxY = gameBoard.clientHeight - 50;
+            fish.style.left = Math.random() * maxX + 'px'; fish.style.top = Math.random() * maxY + 'px';
             
-            // Click để ăn điểm
             fish.addEventListener('click', () => {
                 if(!isPlaying) return;
-                score += 10;
-                scoreUI.innerText = score;
-                fish.innerText = '✨'; // Hiệu ứng nổ
-                fish.style.pointerEvents = 'none';
+                score += 10; scoreUI.innerText = score;
+                fish.innerText = '✨'; fish.style.pointerEvents = 'none';
                 setTimeout(() => fish.remove(), 200);
             });
-
             gameBoard.appendChild(fish);
-            
-            // Tự biến mất nếu không bấm kịp
             setTimeout(() => { if(fish.parentNode) fish.remove(); }, 1500);
         }
 
         startBtn.addEventListener('click', () => {
             if(isPlaying) return;
-            isPlaying = true;
-            score = 0;
-            timeLeft = 30;
-            scoreUI.innerText = score;
-            timeUI.innerText = timeLeft;
-            gameBoard.innerHTML = ''; // Xóa chữ khởi tạo
+            isPlaying = true; score = 0; timeLeft = 30;
+            scoreUI.innerText = score; timeUI.innerText = timeLeft;
+            gameBoard.innerHTML = ''; 
             startBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang chơi...';
             startBtn.style.opacity = '0.5';
 
             gameInterval = setInterval(() => {
-                timeLeft--;
-                timeUI.innerText = timeLeft;
+                timeLeft--; timeUI.innerText = timeLeft;
                 if(timeLeft <= 0) endGame();
             }, 1000);
-
             spawnInterval = setInterval(spawnFishInGame, 600);
         });
 
         function endGame() {
             isPlaying = false;
-            clearInterval(gameInterval);
-            clearInterval(spawnInterval);
+            clearInterval(gameInterval); clearInterval(spawnInterval);
             gameBoard.innerHTML = `<div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); font-size: 2rem; color: var(--pink-accent); font-weight: bold; width: 100%; text-align:center;">Hết giờ! Điểm: ${score} 🐟<br><span style="font-size:1rem; color:var(--text-sub);">Bạn dính thính Cá rồi!</span></div>`;
-            startBtn.innerHTML = '<i class="fas fa-redo"></i> Chơi lại';
-            startBtn.style.opacity = '1';
+            startBtn.innerHTML = '<i class="fas fa-redo"></i> Chơi lại'; startBtn.style.opacity = '1';
         }
+
+        // --- 8. MAGIC QUOTE LOGIC (THÔNG ĐIỆP VŨ TRỤ) ---
+        const quotes = [
+            "✨ Hôm nay là một ngày tuyệt vời để bạn tỏa sáng! Đừng ngần ngại nhé! ✨",
+            "🐟 Cá nhỏ dặn dò: Nhớ uống đủ nước và cười thật tươi nha! 🐟",
+            "💖 Bạn đang làm rất tốt rồi, vũ trụ gửi đến bạn một cái ôm thật chặt! 💖",
+            "💄 Đừng quên tô một chút son để thấy cuộc đời thêm rực rỡ! 💄",
+            "💰 Tín hiệu từ vũ trụ: Tiền tài sắp ập vào người bạn rồi đó, chuẩn bị đỡ đi! 💰",
+            "🦂 Năng lượng Thần Nông: Quyết đoán lên, điều bạn muốn đang đến rất gần! 🦂",
+            "🌟 Hãy luôn giữ lấy sự nhiệt huyết, vì thanh xuân là để rực rỡ! 🌟",
+            "😎 Người ta có thể copy phong cách của bạn, nhưng không thể copy thần thái của bạn! 😎"
+        ];
+        
+        const quoteDisplay = document.getElementById('quote-display');
+        const btnDrawQuote = document.getElementById('btn-draw-quote');
+
+        btnDrawQuote.addEventListener('click', () => {
+            // Tạo hiệu ứng chớp tắt mờ ảo khi random
+            quoteDisplay.style.opacity = 0;
+            
+            // Lấy 1 câu quote ngẫu nhiên
+            setTimeout(() => {
+                const randomIndex = Math.floor(Math.random() * quotes.length);
+                quoteDisplay.innerText = quotes[randomIndex];
+                quoteDisplay.style.opacity = 1;
+            }, 500); // Đợi 0.5s cho chữ mờ hẳn rồi mới hiện chữ mới
+        });
 
     </script>
 </body>
