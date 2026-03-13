@@ -46,7 +46,7 @@
             overflow-x: hidden;
             scroll-behavior: smooth;
             transition: background 0.5s ease, color 0.5s ease;
-            cursor: none; /* Ẩn trỏ chuột mặc định để dùng custom cursor */
+            cursor: none;
         }
 
         h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
@@ -66,18 +66,12 @@
         @keyframes bgGradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         @keyframes heartbeat { 0% { transform: scale(1); } 25% { transform: scale(1.1); } 50% { transform: scale(1); } 75% { transform: scale(1.1); } 100% { transform: scale(1); } }
         @keyframes borderPulse { 0% { border-color: rgba(255,143,171,0.2); } 50% { border-color: rgba(255,143,171,1); } 100% { border-color: rgba(255,143,171,0.2); } }
-        
-        /* Hiệu ứng trỏ chuột nổ (Ripple) */
-        @keyframes clickRipple {
-            0% { width: 0px; height: 0px; opacity: 1; border-width: 4px; }
-            100% { width: 120px; height: 120px; opacity: 0; border-width: 0px; }
-        }
 
         .reveal { opacity: 0; transform: translateY(80px); transition: all 1s cubic-bezier(0.5, 0, 0, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         /* ============================================================
-           3. ENTRANCE SCREEN (GIẢI QUYẾT LỖI AUTOPLAY NHẠC)
+           3. ENTRANCE SCREEN
            ============================================================ */
         #entrance-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
@@ -93,16 +87,21 @@
         .enter-btn:hover { background: #FF8FAB; color: white; transform: scale(1.1); }
 
         /* ============================================================
-           4. CURSOR & PARTICLES (MƯA TIM / CÁ & CLICK)
+           4. CURSOR & PARTICLES (BUNG BUNG EFFECT)
            ============================================================ */
         .cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 100000; pointer-events: none; transition: background-color 0.5s, border-color 0.5s; }
         .cursor-dot { width: 10px; height: 10px; background-color: var(--cursor-main); box-shadow: var(--led-shadow);}
         .cursor-ring { width: 45px; height: 45px; border: 2px solid var(--cursor-main); transition: 0.1s linear; box-shadow: var(--led-shadow); }
         
-        .click-effect {
-            position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
-            border-radius: 50%; border: solid var(--pink-accent); pointer-events: none;
-            z-index: 99999; animation: clickRipple 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        /* Hạt nổ bung bung */
+        .spark {
+            position: fixed; width: 8px; height: 8px; border-radius: 50%; background: var(--pink-accent);
+            pointer-events: none; z-index: 99999; box-shadow: var(--led-shadow);
+            animation: sparkAnim 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+        @keyframes sparkAnim {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0); opacity: 0; }
         }
 
         #particle-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
@@ -241,7 +240,7 @@
         .game-btn:hover { background: var(--pink-dark); transform: scale(1.1); }
 
         /* ============================================================
-           11. MAGIC QUOTE (TÍNH NĂNG MỚI THAY THẾ TIN NHẮN)
+           11. MAGIC QUOTE
            ============================================================ */
         .magic-section { background: var(--bg-bento); border-radius: 30px; padding: 50px; margin-bottom: 50px; border: 2px solid var(--pink-accent); box-shadow: var(--led-shadow); text-align: center; }
         .magic-box { min-height: 150px; display: flex; align-items: center; justify-content: center; flex-direction: column; }
@@ -267,6 +266,7 @@
         .sc-fb i { color: #1877F2; } .sc-fb:hover::before { background: #1877F2; }
         .sc-ig i { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; } .sc-ig:hover i { -webkit-text-fill-color: white; } .sc-ig:hover::before { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
         .sc-tt i { color: #000000; text-shadow: 2px 2px 0px #00f2fe, -2px -2px 0px #fe0979;} [data-theme="dark"] .sc-tt i { color: white; } .sc-tt:hover::before { background: #000000; } .sc-tt:hover i { color: white; text-shadow: none; }
+        .sc-lk i { color: #FFB300; } .sc-lk:hover::before { background: #FFB300; } /* Locket Card */
 
         /* ============================================================
            13. FOOTER
@@ -296,6 +296,12 @@
     </style>
 </head>
 <body>
+    <audio id="bg-music" loop>
+        <source src="https://assets.mixkit.co/active_storage/sfx/135/135-preview.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="click-sound">
+        <source src="https://assets.mixkit.co/active_storage/sfx/3158/3158-preview.mp3" type="audio/mpeg">
+    </audio>
 
     <div id="entrance-screen">
         <h1>Sẵn sàng bước vào thế giới của Cá? 🐟</h1>
@@ -313,9 +319,6 @@
             <div style="color: var(--pink-accent);">A Little Thing</div>
             <div style="color: var(--text-sub); font-size: 0.8rem;">for Cá ❤️</div>
         </div>
-        <audio id="bg-music" loop>
-            <source src="https://www.bensound.com/bensound-music/bensound-tenderness.mp3" type="audio/mpeg">
-        </audio>
     </div>
 
     <nav>
@@ -398,7 +401,7 @@
                 <div class="tl-container tl-right reveal">
                     <div class="tl-content">
                         <h3>Tuổi học trò 🎒</h3>
-                        <p>Những tháng năm thanh xuân rực rỡ bên bạn bè, những lần cúp học, những bức ảnh Photobooth lấp lánh.</p>
+                        <p>Những tháng năm thanh xuân rực rỡ bên bạn bè, những bức ảnh Photobooth lấp lánh.</p>
                     </div>
                 </div>
                 <div class="tl-container tl-left reveal">
@@ -472,17 +475,21 @@
             <p class="text-center" style="font-size: 1.2rem; color: var(--text-sub);">Đừng ngại ngùng, hãy click vào để làm quen với tớ nha! ❤️</p>
             
             <div class="social-container">
-                <a href="#" target="_blank" class="social-card sc-fb">
+                <a href="https://www.facebook.com/swt.juwi" target="_blank" class="social-card sc-fb">
                     <i class="fab fa-facebook-f"></i>
                     <span>Facebook</span>
                 </a>
-                <a href="#" target="_blank" class="social-card sc-ig">
+                <a href="https://www.instagram.com/t_uy.hnil" target="_blank" class="social-card sc-ig">
                     <i class="fab fa-instagram"></i>
                     <span>Instagram</span>
                 </a>
-                <a href="#" target="_blank" class="social-card sc-tt">
+                <a href="https://www.tiktok.com/@n.tli_h" target="_blank" class="social-card sc-tt">
                     <i class="fab fa-tiktok"></i>
                     <span>TikTok</span>
+                </a>
+                <a href="https://locket.cam/emlinhday" target="_blank" class="social-card sc-lk">
+                    <i class="fas fa-camera"></i>
+                    <span>Locket</span>
                 </a>
             </div>
         </div>
@@ -508,14 +515,15 @@
         <div class="container">
             <h3 class="footer-logo">Cá.</h3>
             <p style="font-size: 1.1rem; color: var(--text-sub); margin-bottom: 10px;">Cảm ơn đã dành thời gian ghé thăm trạm dừng chân của Thùy Linh!</p>
-            <p style="font-size: 0.9rem; opacity: 0.7;">Bản quyền thuộc về bé Cá Sinh Năm 2008 ❤️ Mãi Đỉnh</p>
+            <p style="font-size: 0.9rem; opacity: 0.7;">Bản quyền thuộc về GK </p>
         </div>
     </footer>
 
     <script>
-        // --- 1. ENTRANCE SCREEN ---
+        // --- 1. ENTRANCE SCREEN & MUSIC ---
         const entrance = document.getElementById('entrance-screen');
         const bgMusic = document.getElementById('bg-music');
+        const clickSound = document.getElementById('click-sound');
         const playBtn = document.getElementById('play-btn');
         let playing = true;
 
@@ -523,21 +531,19 @@
             entrance.style.opacity = '0';
             setTimeout(() => { entrance.style.visibility = 'hidden'; }, 1000);
             
-            // Ép chạy nhạc
-            bgMusic.volume = 0.5;
-            bgMusic.play().catch(e => console.log("Trình duyệt chặn nhạc, cần click nút Play"));
-            
-            // Bắt đầu mưa rào
+            bgMusic.volume = 0.4;
+            bgMusic.play().catch(e => console.log("Cần click tay nút Play"));
             startRainEffect();
         });
 
-        playBtn.addEventListener('click', () => {
+        playBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Không tạo tiếng pop khi bấm nút nhạc
             if (playing) { bgMusic.pause(); playBtn.innerHTML = '<i class="fas fa-play"></i>'; } 
             else { bgMusic.play(); playBtn.innerHTML = '<i class="fas fa-pause"></i>'; }
             playing = !playing;
         });
 
-        // --- 2. HIỆU ỨNG MƯA TIM / CÁ (Particles) ---
+        // --- 2. HIỆU ỨNG MƯA TIM / CÁ ---
         const container = document.getElementById('particle-container');
         const items = ['💖', '🐟', '✨', '🐠', '🌸'];
         
@@ -553,17 +559,23 @@
         }
         function startRainEffect() { setInterval(createParticle, 400); }
 
-        // --- 3. CUSTOM CURSOR & HIỆU ỨNG CLICK RIPPLE ---
+        // --- 3. CUSTOM CURSOR, SOUND CUTE & HIỆU ỨNG BUNG BUNG KHI CLICK ---
         const dot = document.getElementById("cursor-dot");
         const ring = document.getElementById("cursor-ring");
+        
         window.addEventListener("mousemove", (e) => {
             dot.style.left = `${e.clientX}px`; dot.style.top = `${e.clientY}px`;
             ring.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 100, fill: "forwards" });
         });
         
-        // Tạo vòng sóng (Ripple) tỏa ra khi Click
+        // Sự kiện Click: Tiếng Pop đáng yêu + Hiệu ứng bung hạt (Burst)
         window.addEventListener("click", (e) => {
-            // Hiệu ứng co giật của cái vòng ring (như cũ)
+            // Phát âm thanh Pop
+            clickSound.currentTime = 0;
+            clickSound.volume = 0.5;
+            clickSound.play().catch(()=>{});
+
+            // Vòng tròn co giật
             ring.style.transform = "translate(-50%, -50%) scale(2)";
             ring.style.opacity = "0";
             setTimeout(() => {
@@ -573,14 +585,22 @@
                 setTimeout(() => { ring.style.transition = "0.1s linear"; }, 50);
             }, 300);
 
-            // Hiệu ứng nổ Ripple mượt mà (MỚI)
-            const ripple = document.createElement("div");
-            ripple.classList.add("click-effect");
-            ripple.style.left = `${e.clientX}px`;
-            ripple.style.top = `${e.clientY}px`;
-            document.body.appendChild(ripple);
-            // Tự động xóa sau khi chạy xong animation (0.6s)
-            setTimeout(() => { ripple.remove(); }, 600);
+            // Hiệu ứng "Bung Bung" các hạt li ti
+            for (let i = 0; i < 8; i++) {
+                const spark = document.createElement('div');
+                spark.classList.add('spark');
+                document.body.appendChild(spark);
+                spark.style.left = e.clientX + 'px';
+                spark.style.top = e.clientY + 'px';
+                
+                // Toán học một xíu để hạt bay ra các hướng khác nhau theo hình tròn
+                const angle = (Math.PI * 2 * i) / 8;
+                const distance = 60; // Khoảng cách hạt bay ra xa
+                spark.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
+                spark.style.setProperty('--ty', Math.sin(angle) * distance + 'px');
+                
+                setTimeout(() => spark.remove(), 600);
+            }
         });
 
         // --- 4. SCROLL REVEAL ---
@@ -616,10 +636,11 @@
         }
         type();
 
-        // --- 6. DARK / LIGHT MODE LOGIC ---
+        // --- 6. DARK / LIGHT MODE ---
         const themeBtn = document.getElementById('theme-toggle');
         const themeIcon = themeBtn.querySelector('i');
-        themeBtn.addEventListener('click', () => {
+        themeBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Tránh tạo tiếng pop đè lên khi ấn theme
             const current = document.documentElement.getAttribute('data-theme');
             if (current === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'light'); 
@@ -630,7 +651,7 @@
             }
         });
 
-        // --- 7. MINIGAME LOGIC ---
+        // --- 7. MINIGAME ---
         const gameBoard = document.getElementById('game-board');
         const startBtn = document.getElementById('start-game-btn');
         const scoreUI = document.getElementById('game-score');
@@ -649,17 +670,20 @@
             const maxX = gameBoard.clientWidth - 50; const maxY = gameBoard.clientHeight - 50;
             fish.style.left = Math.random() * maxX + 'px'; fish.style.top = Math.random() * maxY + 'px';
             
-            fish.addEventListener('click', () => {
+            fish.addEventListener('click', (e) => {
+                e.stopPropagation();
                 if(!isPlaying) return;
                 score += 10; scoreUI.innerText = score;
                 fish.innerText = '✨'; fish.style.pointerEvents = 'none';
+                clickSound.currentTime = 0; clickSound.play().catch(()=>{}); // Thêm tiếng pop khi bắt được cá
                 setTimeout(() => fish.remove(), 200);
             });
             gameBoard.appendChild(fish);
             setTimeout(() => { if(fish.parentNode) fish.remove(); }, 1500);
         }
 
-        startBtn.addEventListener('click', () => {
+        startBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             if(isPlaying) return;
             isPlaying = true; score = 0; timeLeft = 30;
             scoreUI.innerText = score; timeUI.innerText = timeLeft;
@@ -681,7 +705,7 @@
             startBtn.innerHTML = '<i class="fas fa-redo"></i> Chơi lại'; startBtn.style.opacity = '1';
         }
 
-        // --- 8. MAGIC QUOTE LOGIC (THÔNG ĐIỆP VŨ TRỤ) ---
+        // --- 8. MAGIC QUOTE ---
         const quotes = [
             "✨ Hôm nay là một ngày tuyệt vời để bạn tỏa sáng! Đừng ngần ngại nhé! ✨",
             "🐟 Cá nhỏ dặn dò: Nhớ uống đủ nước và cười thật tươi nha! 🐟",
@@ -696,16 +720,15 @@
         const quoteDisplay = document.getElementById('quote-display');
         const btnDrawQuote = document.getElementById('btn-draw-quote');
 
-        btnDrawQuote.addEventListener('click', () => {
-            // Tạo hiệu ứng chớp tắt mờ ảo khi random
+        btnDrawQuote.addEventListener('click', (e) => {
+            e.stopPropagation();
+            clickSound.currentTime = 0; clickSound.play().catch(()=>{});
             quoteDisplay.style.opacity = 0;
-            
-            // Lấy 1 câu quote ngẫu nhiên
             setTimeout(() => {
                 const randomIndex = Math.floor(Math.random() * quotes.length);
                 quoteDisplay.innerText = quotes[randomIndex];
                 quoteDisplay.style.opacity = 1;
-            }, 500); // Đợi 0.5s cho chữ mờ hẳn rồi mới hiện chữ mới
+            }, 500); 
         });
 
     </script>
